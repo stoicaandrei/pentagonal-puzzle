@@ -1,5 +1,15 @@
 import { Polygon } from "react-native-svg";
 import { RenderPoint, GridPosition } from "./types";
+import Animated, {
+  useAnimatedProps,
+  withTiming,
+  useSharedValue,
+  withDelay,
+} from "react-native-reanimated";
+import { useEffect } from "react";
+
+// Create an animated polygon component
+const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
 
 interface HexagonProps {
   position: GridPosition;
@@ -8,6 +18,14 @@ interface HexagonProps {
 }
 
 export function Hexagon({ position, center, width }: HexagonProps) {
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    // Add a small delay based on position to create a cascade effect
+    const delay = (position.row + position.col) * 10;
+    opacity.value = withDelay(delay, withTiming(1, { duration: 500 }));
+  }, []);
+
   const getHexagonPoints = () => {
     const radius = width / Math.sqrt(3);
     const angle = Math.PI / 3; // 60 degrees
@@ -23,10 +41,15 @@ export function Hexagon({ position, center, width }: HexagonProps) {
     return points.map(([x, y]) => `${x},${y}`).join(" ");
   };
 
+  const animatedProps = useAnimatedProps(() => ({
+    points: getHexagonPoints(),
+    opacity: opacity.value,
+  }));
+
   return (
-    <Polygon
+    <AnimatedPolygon
       key={`hex-${position.row}-${position.col}`}
-      points={getHexagonPoints()}
+      animatedProps={animatedProps}
       fill="#e5e7eb"
       stroke="#d1d5db"
       strokeWidth="1"
