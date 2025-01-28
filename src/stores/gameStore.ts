@@ -1,24 +1,47 @@
 import { create } from "zustand";
-import { Cell } from "../components/types";
+import { immer } from "zustand/middleware/immer";
+import { Cell, GridPosition, PlayingField } from "../components/types";
 
 interface GameState {
   grid: Cell[][];
+  playingField: PlayingField;
   initializeGrid: (rows: number, cols: number) => void;
 }
 
-export const useGameStore = create<GameState>((set) => ({
-  grid: [],
+export const useGameStore = create<GameState>()(
+  immer((set) => ({
+    grid: [],
 
-  initializeGrid: (rows: number, cols: number) => {
-    const newGrid = Array(rows)
-      .fill(null)
-      .map((_, rowIndex) =>
-        Array(cols)
+    initializeGrid: (rows: number, cols: number) => {
+      set((state) => {
+        state.grid = Array(rows)
           .fill(null)
-          .map((_, colIndex) => ({
-            position: { row: rowIndex, col: colIndex },
-          }))
-      );
-    set({ grid: newGrid });
-  },
-}));
+          .map((_, rowIndex) =>
+            Array(cols)
+              .fill(null)
+              .map((_, colIndex) => ({
+                position: { row: rowIndex, col: colIndex },
+              }))
+          );
+      });
+    },
+
+    playingField: {
+      validPositions: [],
+    },
+
+    setPlayingCell: (position: GridPosition) => {
+      set((state) => {
+        const existingIndex = state.playingField.validPositions.findIndex(
+          (pos) => pos.row === position.row && pos.col === position.col
+        );
+
+        if (existingIndex >= 0) {
+          state.playingField.validPositions.splice(existingIndex, 1);
+        } else {
+          state.playingField.validPositions.push(position);
+        }
+      });
+    },
+  }))
+);

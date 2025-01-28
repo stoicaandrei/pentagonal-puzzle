@@ -11,3 +11,7 @@ export type RenderPoint = {
 export type Cell = {
   position: GridPosition;
 };
+
+export type PlayingField = {
+  validPositions: GridPosition[];
+};
