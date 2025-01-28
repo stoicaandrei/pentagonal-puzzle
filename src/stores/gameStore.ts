@@ -6,10 +6,12 @@ interface GameState {
   grid: Cell[][];
   playingField: PlayingField;
   initializeGrid: (rows: number, cols: number) => void;
+  isPlayingCell: (position: GridPosition) => boolean;
+  setPlayingCell: (position: GridPosition) => void;
 }
 
 export const useGameStore = create<GameState>()(
-  immer((set) => ({
+  immer((set, get) => ({
     grid: [],
 
     initializeGrid: (rows: number, cols: number) => {
@@ -42,6 +44,12 @@ export const useGameStore = create<GameState>()(
           state.playingField.validPositions.push(position);
         }
       });
+    },
+
+    isPlayingCell: (position: GridPosition) => {
+      return get().playingField.validPositions.some(
+        (pos) => pos.row === position.row && pos.col === position.col
+      );
     },
   }))
 );
