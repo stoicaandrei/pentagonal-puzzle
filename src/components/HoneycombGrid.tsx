@@ -1,4 +1,4 @@
-import { GestureResponderEvent, View } from "react-native";
+import { GestureResponderEvent, Platform, View } from "react-native";
 import Svg, { G } from "react-native-svg";
 import { Hexagon } from "./Hexagon";
 import { RenderPoint, GridPosition } from "./types";
@@ -95,15 +95,22 @@ export function HoneycombGrid({ cellSize }: HoneycombGridProps) {
     };
   };
 
+  const eventHandlers = Platform.select({
+    web: {
+      onMouseDown: handleDragStart,
+      onMouseMove: handleDragMove,
+      onMouseUp: handleDragEnd,
+    },
+    default: {
+      onTouchStart: handleDragStart,
+      onTouchMove: handleDragMove,
+      onTouchEnd: handleDragEnd,
+    },
+  });
+
   return (
     <View>
-      <Svg
-        width={svgWidth}
-        height={svgHeight}
-        onTouchStart={handleDragStart}
-        onTouchMove={handleDragMove}
-        onTouchEnd={handleDragEnd}
-      >
+      <Svg width={svgWidth} height={svgHeight} {...eventHandlers}>
         {grid.map((row, rowIndex) =>
           row.map((cell, colIndex) => {
             const center = hexCenter(cell.position);
