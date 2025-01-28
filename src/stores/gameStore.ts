@@ -7,7 +7,7 @@ interface GameState {
   playingField: PlayingField;
   initializeGrid: (rows: number, cols: number) => void;
   isPlayingCell: (position: GridPosition) => boolean;
-  setPlayingCell: (position: GridPosition) => void;
+  setPlayingCell: (position: GridPosition, isPlaying: boolean) => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -32,16 +32,19 @@ export const useGameStore = create<GameState>()(
       validPositions: [],
     },
 
-    setPlayingCell: (position: GridPosition) => {
+    setPlayingCell: (position: GridPosition, isPlaying: boolean) => {
       set((state) => {
-        const existingIndex = state.playingField.validPositions.findIndex(
-          (pos) => pos.row === position.row && pos.col === position.col
-        );
+        if (isPlaying) {
+          if (state.playingField.validPositions.includes(position)) {
+            return;
+          }
 
-        if (existingIndex >= 0) {
-          state.playingField.validPositions.splice(existingIndex, 1);
-        } else {
           state.playingField.validPositions.push(position);
+        } else {
+          state.playingField.validPositions =
+            state.playingField.validPositions.filter(
+              (pos) => pos.row !== position.row || pos.col !== position.col
+            );
         }
       });
     },

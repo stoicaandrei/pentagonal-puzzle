@@ -7,6 +7,7 @@ import Animated, {
   withDelay,
 } from "react-native-reanimated";
 import { useEffect } from "react";
+import { useGameStore } from "stores/gameStore";
 
 // Create an animated polygon component
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
@@ -19,6 +20,7 @@ interface HexagonProps {
 
 export function Hexagon({ position, center, width }: HexagonProps) {
   const opacity = useSharedValue(0);
+  const isPlayingCell = useGameStore((state) => state.isPlayingCell(position));
 
   useEffect(() => {
     // Add a small delay based on position to create a cascade effect
@@ -50,7 +52,7 @@ export function Hexagon({ position, center, width }: HexagonProps) {
     <AnimatedPolygon
       key={`hex-${position.row}-${position.col}`}
       animatedProps={animatedProps}
-      fill="#e5e7eb"
+      fill={isPlayingCell ? "#f3f4f6" : "#e5e7eb"}
       stroke="#d1d5db"
       strokeWidth="1"
     />
