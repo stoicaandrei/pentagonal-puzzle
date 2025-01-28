@@ -5,6 +5,8 @@ import Animated, {
   withTiming,
   useSharedValue,
   withDelay,
+  withSpring,
+  withSequence,
 } from "react-native-reanimated";
 import { useEffect } from "react";
 import { useGameStore } from "stores/gameStore";
@@ -20,6 +22,7 @@ interface HexagonProps {
 
 export function Hexagon({ position, center, width }: HexagonProps) {
   const opacity = useSharedValue(0);
+  const scale = useSharedValue(1);
   const isPlayingCell = useGameStore((state) => state.isPlayingCell(position));
 
   useEffect(() => {
@@ -27,6 +30,15 @@ export function Hexagon({ position, center, width }: HexagonProps) {
     const delay = (position.row + position.col) * 10;
     opacity.value = withDelay(delay, withTiming(1, { duration: 500 }));
   }, []);
+
+  useEffect(() => {
+    if (isPlayingCell) {
+      scale.value = withSequence(
+        withSpring(1.1, { damping: 8, stiffness: 150 }),
+        withDelay(100, withSpring(1, { damping: 12, stiffness: 150 }))
+      );
+    }
+  }, [isPlayingCell]);
 
   const getHexagonPoints = () => {
     const radius = width / Math.sqrt(3);
@@ -46,6 +58,7 @@ export function Hexagon({ position, center, width }: HexagonProps) {
   const animatedProps = useAnimatedProps(() => ({
     points: getHexagonPoints(),
     opacity: opacity.value,
+    transform: [{ scale: scale.value }],
   }));
 
   return (
@@ -55,6 +68,7 @@ export function Hexagon({ position, center, width }: HexagonProps) {
       fill={isPlayingCell ? "#f3f4f6" : "#e5e7eb"}
       stroke="#d1d5db"
       strokeWidth="1"
+      origin={`${center.x}, ${center.y}`}
     />
   );
 }
