@@ -103,10 +103,6 @@ export function HoneycombGrid({ cellSize }: HoneycombGridProps) {
         onTouchStart={handleDragStart}
         onTouchMove={handleDragMove}
         onTouchEnd={handleDragEnd}
-        onMouseDown={handleDragStart}
-        onMouseMove={handleDragMove}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
       >
         {grid.map((row, rowIndex) =>
           row.map((cell, colIndex) => {
