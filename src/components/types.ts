@@ -7,3 +7,7 @@ export type RenderPoint = {
   x: number;
   y: number;
 };
+
+export type Cell = {
+  position: GridPosition;
+};
