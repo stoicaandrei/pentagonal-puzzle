@@ -1,5 +1,5 @@
 import { PlayingField } from "common";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { View, Text, FlatList, Pressable, Dimensions } from "react-native";
 import { PlayingFieldPreview } from "./PlayingFieldPreview";
 
 interface PlayingFieldSelectorListProps {
@@ -17,7 +17,7 @@ export function PlayingFieldSelectorList({
       onPress={() => onSelectField?.(item)}
     >
       <View className="w-full flex flex-1 justify-center items-center">
-        <PlayingFieldPreview playingField={item} />
+        <PlayingFieldPreview playingField={item} previewWidth={200} />
       </View>
 
       <Text className="text-lg font-semibold text-gray-800">{item.title}</Text>

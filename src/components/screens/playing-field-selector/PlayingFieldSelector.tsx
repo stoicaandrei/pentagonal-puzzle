@@ -6,8 +6,8 @@ const playingFields: PlayingField[] = [
   {
     id: "1",
     title: "Playing Field 1",
-    rows: 3,
-    cols: 3,
+    rows: 5,
+    cols: 5,
     validPositions: [
       { row: 0, col: 0 },
       { row: 0, col: 1 },
