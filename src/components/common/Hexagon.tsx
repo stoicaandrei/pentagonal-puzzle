@@ -9,6 +9,7 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 import { useEffect } from "react";
+import { hexagonPoints } from "utils";
 
 // Create an animated polygon component
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
@@ -39,23 +40,10 @@ export function Hexagon({ position, center, width, color }: HexagonProps) {
     }
   }, [color]);
 
-  const getHexagonPoints = () => {
-    const radius = width / Math.sqrt(3);
-    const angle = Math.PI / 3; // 60 degrees
-    const points: [number, number][] = [];
-
-    for (let i = 0; i < 6; i++) {
-      // Start from -90 degrees (π/2) to rotate the hexagon
-      const x = center.x + radius * Math.cos(angle * i - Math.PI / 2);
-      const y = center.y + radius * Math.sin(angle * i - Math.PI / 2);
-      points.push([x, y]);
-    }
-
-    return points.map(([x, y]) => `${x},${y}`).join(" ");
-  };
-
   const animatedProps = useAnimatedProps(() => ({
-    points: getHexagonPoints(),
+    points: hexagonPoints(center, width)
+      .map(([x, y]) => `${x},${y}`)
+      .join(" "),
     opacity: opacity.value,
     transform: [{ scale: scale.value }],
   }));
