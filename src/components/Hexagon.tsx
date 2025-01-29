@@ -34,7 +34,7 @@ export function Hexagon({ position, center, width }: HexagonProps) {
   useEffect(() => {
     if (isPlayingCell) {
       scale.value = withSequence(
-        withSpring(1.1, { damping: 8, stiffness: 150 }),
+        withSpring(1.05, { damping: 8, stiffness: 150 }),
         withDelay(100, withSpring(1, { damping: 12, stiffness: 150 }))
       );
     }
