@@ -9,7 +9,6 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 import { useEffect } from "react";
-import { useGameStore } from "stores/gameStore";
 
 // Create an animated polygon component
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
