@@ -1,4 +1,8 @@
-import { HexagonalGrid } from "components/common/HexagonalGrid";
+import { Cell } from "common";
+import {
+  HexagonalGrid,
+  OnCellTouchedParams,
+} from "components/common/HexagonalGrid";
 import { useEffect, useState } from "react";
 import {
   LayoutChangeEvent,
@@ -20,11 +24,24 @@ interface PlayingFieldEditorProps {
 }
 
 export function PlayingFieldEditor({ rows, cols }: PlayingFieldEditorProps) {
-  const grid = emptyGrid({ rows: rows, cols: cols });
+  const [grid, setGrid] = useState(emptyGrid({ rows: rows, cols: cols }));
+
+  const handleCellTouch = ({ cell }: OnCellTouchedParams) => {
+    const { row, col } = cell.position;
+    grid[row][col].color = "red";
+    setGrid(grid);
+  };
+
+  console.log("grid", grid);
 
   return (
     <View className="w-full h-full">
-      <HexagonalGrid rows={rows} cols={cols} grid={grid} />
+      <HexagonalGrid
+        rows={rows}
+        cols={cols}
+        grid={grid}
+        onCellTouched={handleCellTouch}
+      />
     </View>
   );
 }

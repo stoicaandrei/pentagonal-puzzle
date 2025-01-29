@@ -1,4 +1,4 @@
-import { PlayingField } from "common";
+import { Cell, PlayingField } from "common";
 import { LayoutChangeEvent } from "react-native";
 import { computeCellWidth, computeCellWidthFromHeight } from "./hex-math";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export const emptyGrid = ({
   rows,
   cols,
   color = "white",
-}: EmptyGridOptions) => {
+}: EmptyGridOptions): Cell[][] => {
   return Array.from({ length: rows }, (_, row) =>
     Array.from({ length: cols }, (_, col) => ({
       position: { row, col },
