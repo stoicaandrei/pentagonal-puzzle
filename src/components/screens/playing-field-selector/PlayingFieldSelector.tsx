@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { PlayingFieldSelectorList } from "./PlayingFieldSelectorList";
 import { PlayingField } from "common";
+import { useRouter } from "expo-router";
 
 const playingFields: PlayingField[] = [
   {
@@ -18,9 +19,10 @@ const playingFields: PlayingField[] = [
 ];
 
 export function PlayingFieldSelector() {
+  const router = useRouter();
+
   const handleNewField = () => {
-    // Handle new field creation
-    console.log("Create new field");
+    router.push("/playing-field-editor");
   };
 
   return (
