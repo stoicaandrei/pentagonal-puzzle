@@ -2,24 +2,20 @@ import { Cell } from "common";
 import { Hexagon } from "./Hexagon";
 import { View } from "react-native";
 import Svg from "react-native-svg";
-import { gridHeight, hexCenter } from "utils";
+import { gridHeight, hexCenter, useResponsiveCellWidth } from "utils";
 import { gridWidth } from "utils";
 
 interface HexagonalGridProps {
   rows: number;
   cols: number;
-  cellWidth: number;
   grid: Cell[][];
 }
 
-export function HexagonalGrid({
-  rows,
-  cols,
-  cellWidth,
-  grid,
-}: HexagonalGridProps) {
+export function HexagonalGrid({ rows, cols, grid }: HexagonalGridProps) {
+  const { cellWidth, viewProps } = useResponsiveCellWidth(cols, rows);
+
   return (
-    <View>
+    <View {...viewProps}>
       <Svg
         width={gridWidth(cols, cellWidth) + 10}
         height={gridHeight(rows, cellWidth) + 10}
