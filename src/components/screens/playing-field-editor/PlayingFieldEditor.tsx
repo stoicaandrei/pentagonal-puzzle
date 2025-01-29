@@ -28,11 +28,12 @@ export function PlayingFieldEditor({ rows, cols }: PlayingFieldEditorProps) {
 
   const handleCellTouch = ({ cell }: OnCellTouchedParams) => {
     const { row, col } = cell.position;
-    grid[row][col].color = "red";
-    setGrid(grid);
+    setGrid((prevGrid) => {
+      const newGrid = prevGrid.map((row) => [...row]); // Create a deep copy
+      newGrid[row][col].color = "red";
+      return newGrid;
+    });
   };
-
-  console.log("grid", grid);
 
   return (
     <View className="w-full h-full">

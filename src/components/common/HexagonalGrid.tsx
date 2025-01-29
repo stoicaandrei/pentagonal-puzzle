@@ -72,6 +72,8 @@ export function HexagonalGrid({
   };
 
   const findCellAtPoint = (x: number, y: number): Cell | null => {
+    let minDistance = Infinity;
+    let closestCell = null;
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const position = { row, col };
@@ -83,12 +85,18 @@ export function HexagonalGrid({
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         // If point is within cellSize of center, it's inside the hexagon
-        if (distance <= cellWidth) {
-          return grid[row][col];
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestCell = grid[row][col];
         }
       }
     }
-    return null;
+
+    if (minDistance > cellWidth) {
+      return null;
+    }
+
+    return closestCell;
   };
 
   const eventHandlers = Platform.select({
