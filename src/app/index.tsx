@@ -1,5 +1,10 @@
-import App from "App";
+import { View } from "react-native";
+import { PlayingFieldSelector } from "../components/screens/playing-field-selector/PlayingFieldSelector";
 
 export default function IndexPage() {
-  return <App />;
+  return (
+    <View className="container mx-auto">
+      <PlayingFieldSelector />
+    </View>
+  );
 }
