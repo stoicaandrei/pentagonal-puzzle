@@ -1,22 +1,48 @@
 import { HexagonalGrid } from "components/common/HexagonalGrid";
-import { Dimensions } from "react-native";
-import { computeCellWidth, computeCols, emptyGrid } from "utils";
+import { useEffect, useState } from "react";
+import {
+  LayoutChangeEvent,
+  useWindowDimensions,
+  View,
+  Text,
+} from "react-native";
+import {
+  computeCellWidth,
+  computeCellWidthFromHeight,
+  computeCols,
+  computeRows,
+  emptyGrid,
+} from "utils";
 
-const EDITOR_CELL_WIDTH = 100;
+interface PlayingFieldEditorProps {
+  rows: number;
+  cols: number;
+}
 
-export function PlayingFieldEditor() {
-  const editorWidth = Dimensions.get("window").width * 0.5;
-  const cols = computeCols(editorWidth, EDITOR_CELL_WIDTH);
+export function PlayingFieldEditor({ rows, cols }: PlayingFieldEditorProps) {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
-  const rows = cols;
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setWidth(width);
+    setHeight(height);
+  };
+
+  const width1 = computeCellWidth(width, cols);
+  const width2 = computeCellWidthFromHeight(height, rows);
+  const cellWidth = Math.min(width1, width2);
+
   const grid = emptyGrid({ rows: rows, cols: cols });
 
   return (
-    <HexagonalGrid
-      rows={rows}
-      cols={cols}
-      cellWidth={EDITOR_CELL_WIDTH}
-      grid={grid}
-    />
+    <View className="w-full h-full" onLayout={handleLayout}>
+      <HexagonalGrid
+        rows={rows}
+        cols={cols}
+        cellWidth={cellWidth}
+        grid={grid}
+      />
+    </View>
   );
 }

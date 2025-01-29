@@ -1,6 +1,8 @@
 import { GridPosition, RenderPoint } from "common";
 
 export const cellHeight = (cellWidth: number) => (cellWidth * Math.sqrt(3)) / 2;
+export const cellWidth = (cellHeight: number) =>
+  (cellHeight * 2) / Math.sqrt(3);
 
 export const gridWidth = (cols: number, cellWidth: number) =>
   (cols + 0.5) * cellWidth;
@@ -40,4 +42,18 @@ export const computeCellWidth = (desiredGridWidth: number, cols: number) => {
 
 export const computeCols = (desiredGridWidth: number, cellWidth: number) => {
   return Math.floor(desiredGridWidth / cellWidth - 0.5);
+};
+
+export const computeCellWidthFromHeight = (
+  desiredGridHeight: number,
+  rows: number
+) => {
+  const height = Math.floor(desiredGridHeight / rows);
+  return cellWidth(height);
+};
+
+export const computeRows = (desiredGridHeight: number, cellWidth: number) => {
+  const height = cellHeight(cellWidth);
+  const rows = Math.floor(desiredGridHeight / height);
+  return rows;
 };
