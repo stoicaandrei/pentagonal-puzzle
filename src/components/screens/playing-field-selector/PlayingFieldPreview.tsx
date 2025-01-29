@@ -17,7 +17,7 @@ export function PlayingFieldPreview({
     <HexagonalGrid
       rows={playingField.rows}
       cols={playingField.cols}
-      cellSize={10}
+      cellWidth={15}
       grid={grid}
     />
   );

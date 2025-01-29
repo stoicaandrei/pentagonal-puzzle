@@ -16,9 +16,10 @@ export function PlayingFieldSelectorList({
       className="bg-white rounded-xl p-4 shadow-md active:opacity-70"
       onPress={() => onSelectField?.(item)}
     >
-      <View className="w-full aspect-video mb-3 rounded-lg overflow-hidden">
+      <View className="w-full flex flex-1 justify-center items-center">
         <PlayingFieldPreview playingField={item} />
       </View>
+
       <Text className="text-lg font-semibold text-gray-800">{item.title}</Text>
     </Pressable>
   );

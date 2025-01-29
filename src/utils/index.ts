@@ -1,21 +1,19 @@
 import { GridPosition, PlayingField } from "common";
 import { _printGrid } from "./debug";
 
-export const hexWidth = (cellSize: number) => cellSize * Math.sqrt(3);
-export const verticalSpacing = (cellSize: number) => cellSize * 1.5;
-export const horizontalSpacing = (cellSize: number) => hexWidth(cellSize) * 1;
+export const cellHeight = (cellWidth: number) => (cellWidth * Math.sqrt(3)) / 2;
 
-export const gridWidth = (cols: number, cellSize: number) =>
-  (cols + 0.5) * horizontalSpacing(cellSize) + 10;
-export const gridHeight = (rows: number, cellSize: number) =>
-  (rows + 0.5) * verticalSpacing(cellSize) + 10;
+export const gridWidth = (cols: number, cellWidth: number) =>
+  (cols + 0.5) * cellWidth;
+export const gridHeight = (rows: number, cellWidth: number) =>
+  (rows + 0.5) * cellHeight(cellWidth);
 
-export const hexCenter = (position: GridPosition, cellSize: number) => {
+export const hexCenter = (position: GridPosition, cellWidth: number) => {
   const centerX =
-    position.col * horizontalSpacing(cellSize) +
-    (position.row % 2 ? hexWidth(cellSize) / 2 : 0) +
-    cellSize;
-  const centerY = position.row * verticalSpacing(cellSize) + cellSize;
+    position.col * cellWidth +
+    (position.row % 2 ? cellWidth / 2 : 0) +
+    cellWidth;
+  const centerY = position.row * cellHeight(cellWidth) + cellWidth;
 
   return { x: centerX, y: centerY };
 };
@@ -28,13 +26,9 @@ export const playingFieldToGrid = (playingField: PlayingField) => {
     }))
   );
 
-  _printGrid(grid);
-
   playingField.validPositions.forEach((position) => {
     grid[position.row][position.col].color = "green";
   });
-
-  _printGrid(grid);
 
   return grid;
 };
