@@ -1,7 +1,7 @@
 {
   "name": "pentagonal-puzzle",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "index.ts",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -11,13 +11,16 @@
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",
     "babel-plugin-module-resolver": "^5.0.2",
+    "babel-plugin-react-compiler": "19.0.0-beta-27714ef-20250124",
+    "eslint-plugin-react-compiler": "19.0.0-beta-27714ef-20250124",
     "expo": "~52.0.28",
     "expo-router": "~4.0.17",
     "expo-status-bar": "~2.0.1",
     "immer": "^10.1.1",
     "nativewind": "^4.1.23",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.0.0",
+    "react-compiler-runtime": "19.0.0-beta-27714ef-20250124",
+    "react-dom": "19.0.0",
     "react-native": "0.76.6",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-reanimated": "~3.16.1",
