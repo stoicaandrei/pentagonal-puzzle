@@ -1,12 +1,30 @@
 import { PlayingField } from "common";
 
-export const playingFieldToGrid = (playingField: PlayingField) => {
-  const grid = Array.from({ length: playingField.rows }, (_, row) =>
-    Array.from({ length: playingField.cols }, (_, col) => ({
+interface EmptyGridOptions {
+  rows: number;
+  cols: number;
+  color?: string;
+}
+
+export const emptyGrid = ({
+  rows,
+  cols,
+  color = "white",
+}: EmptyGridOptions) => {
+  return Array.from({ length: rows }, (_, row) =>
+    Array.from({ length: cols }, (_, col) => ({
       position: { row, col },
-      color: "white",
+      color,
     }))
   );
+};
+
+export const playingFieldToGrid = (playingField: PlayingField) => {
+  const grid = emptyGrid({
+    rows: playingField.rows,
+    cols: playingField.cols,
+    color: "white",
+  });
 
   playingField.validPositions.forEach((position) => {
     grid[position.row][position.col].color = "green";

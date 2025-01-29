@@ -12,9 +12,9 @@ export const hexCenter = (position: GridPosition, cellWidth: number) => {
     position.col * cellWidth +
     (position.row % 2 ? cellWidth / 2 : 0) +
     cellWidth -
-    cellWidth / 3;
+    cellWidth / 2.5;
   const centerY =
-    position.row * cellHeight(cellWidth) + cellWidth - cellWidth / 3;
+    position.row * cellHeight(cellWidth) + cellWidth - cellWidth / 2.5;
 
   return { x: centerX, y: centerY };
 };
@@ -36,4 +36,8 @@ export const hexagonPoints = (center: RenderPoint, width: number) => {
 
 export const computeCellWidth = (desiredGridWidth: number, cols: number) => {
   return desiredGridWidth / (cols + 0.5);
+};
+
+export const computeCols = (desiredGridWidth: number, cellWidth: number) => {
+  return Math.floor(desiredGridWidth / cellWidth - 0.5);
 };
