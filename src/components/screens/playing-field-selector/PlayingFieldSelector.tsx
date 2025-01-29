@@ -18,12 +18,20 @@ const playingFields: PlayingField[] = [
 ];
 
 export function PlayingFieldSelector() {
+  const handleNewField = () => {
+    // Handle new field creation
+    console.log("Create new field");
+  };
+
   return (
     <View className="flex-1 items-center justify-center">
       <Text className="text-3xl font-bold mb-4 pt-4">
         Select a playing field
       </Text>
-      <PlayingFieldSelectorList playingFields={playingFields} />
+      <PlayingFieldSelectorList
+        playingFields={playingFields}
+        onNewField={handleNewField}
+      />
     </View>
   );
 }
