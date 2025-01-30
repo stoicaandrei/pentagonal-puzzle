@@ -1,6 +1,7 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { useState } from "react";
 import { PiecesEditor } from "./PiecesEditor";
+import { Doc } from "@/convex/_generated/dataModel";
 
 const PIECE_COLORS = [
   "#FF6B6B", // Red
@@ -43,15 +44,25 @@ function PiecePreview({ color, isSelected, onSelect }: PiecePreviewProps) {
   );
 }
 
-export function PiecesEditorPage() {
-  const rows = 13;
-  const cols = 13;
-  const [selectedPieceColor, setSelectedPieceColor] = useState<string | null>(
-    null
-  );
+interface PiecesEditorPageProps {
+  playingField: Doc<"playingFields">;
+}
+
+export function PiecesEditorPage({ playingField }: PiecesEditorPageProps) {
+  const rows = playingField.rows;
+  const cols = playingField.cols;
+  const [selectedPieceColor, setSelectedPieceColor] = useState<string>();
+
+  const handlePieceSelect = (color: string) => {
+    if (selectedPieceColor === color) {
+      setSelectedPieceColor(undefined);
+    } else {
+      setSelectedPieceColor(color);
+    }
+  };
 
   return (
-    <View style={{ padding: 16 }}>
+    <View style={{ padding: 16, height: "100%", width: "100%" }}>
       <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
         Select a Piece
       </Text>
@@ -66,32 +77,32 @@ export function PiecesEditorPage() {
               key={color}
               color={color}
               isSelected={selectedPieceColor === color}
-              onSelect={() => setSelectedPieceColor(color)}
+              onSelect={() => handlePieceSelect(color)}
             />
           ))}
         </ScrollView>
       </View>
 
-      {selectedPieceColor && (
-        <View style={{ marginTop: 24 }}>
-          <Text style={{ fontSize: 16, fontWeight: "600", marginBottom: 12 }}>
-            Edit Piece
-          </Text>
-          <View
-            style={{
-              backgroundColor: "#f3f4f6",
-              borderRadius: 12,
-              padding: 16,
-            }}
-          >
-            <PiecesEditor
-              rows={rows}
-              cols={cols}
-              pieceColor={selectedPieceColor}
-            />
-          </View>
+      <View style={{ marginTop: 24, height: "100%", width: "100%" }}>
+        <Text style={{ fontSize: 16, fontWeight: "600", marginBottom: 12 }}>
+          Edit Piece
+        </Text>
+        <View
+          style={{
+            backgroundColor: "#f3f4f6",
+            borderRadius: 12,
+            padding: 16,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <PiecesEditor
+            rows={rows}
+            cols={cols}
+            pieceColor={selectedPieceColor}
+          />
         </View>
-      )}
+      </View>
     </View>
   );
 }

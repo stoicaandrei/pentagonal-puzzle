@@ -9,11 +9,13 @@ import { emptyGrid } from "@/utils";
 interface PiecesEditorProps {
   rows: number;
   cols: number;
-  pieceColor: string;
+  pieceColor?: string;
 }
 
 export function PiecesEditor({ rows, cols, pieceColor }: PiecesEditorProps) {
-  const [grid, setGrid] = useState(emptyGrid({ rows: rows, cols: cols }));
+  const [grid, setGrid] = useState(
+    emptyGrid({ rows: rows, cols: cols, color: "white" })
+  );
 
   useEffect(() => {
     setGrid(emptyGrid({ rows: rows, cols: cols }));
@@ -23,7 +25,7 @@ export function PiecesEditor({ rows, cols, pieceColor }: PiecesEditorProps) {
     const { row, col } = cell.position;
     setGrid((prevGrid) => {
       const newGrid = prevGrid.map((row) => [...row]); // Create a deep copy
-      newGrid[row][col].color = pieceColor;
+      newGrid[row][col].color = pieceColor ?? "white";
       return newGrid;
     });
   };
