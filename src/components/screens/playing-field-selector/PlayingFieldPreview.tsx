@@ -1,6 +1,7 @@
 import { PlayingField } from "common";
 import { HexagonalGrid } from "components/common/HexagonalGrid";
-import { computeCellWidth, playingFieldToGrid } from "utils";
+import { View } from "react-native";
+import { playingFieldToGrid } from "utils";
 
 interface PlayingFieldPreviewProps {
   playingField: PlayingField;
@@ -13,14 +14,13 @@ export function PlayingFieldPreview({
 }: PlayingFieldPreviewProps) {
   const grid = playingFieldToGrid(playingField);
 
-  const cellWidth = computeCellWidth(previewWidth, playingField.cols);
-
   return (
-    <HexagonalGrid
-      rows={playingField.rows}
-      cols={playingField.cols}
-      cellWidth={cellWidth}
-      grid={grid}
-    />
+    <View style={{ width: previewWidth, minHeight: previewWidth }}>
+      <HexagonalGrid
+        rows={playingField.rows}
+        cols={playingField.cols}
+        grid={grid}
+      />
+    </View>
   );
 }
