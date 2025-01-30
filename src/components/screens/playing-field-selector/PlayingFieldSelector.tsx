@@ -1,32 +1,20 @@
 import { View, Text } from "react-native";
 import { PlayingFieldSelectorList } from "./PlayingFieldSelectorList";
-import { PlayingField } from "common";
 import { useRouter } from "expo-router";
-
-const playingFields: PlayingField[] = [
-  {
-    id: "1",
-    title: "Playing Field 1",
-    rows: 5,
-    cols: 5,
-    validPositions: [
-      { row: 0, col: 0 },
-      { row: 0, col: 1 },
-      { row: 1, col: 0 },
-      { row: 1, col: 1 },
-    ],
-  },
-];
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { Doc } from "@/convex/_generated/dataModel";
 
 export function PlayingFieldSelector() {
+  const playingFields = useQuery(api.game.listPlayingFields);
   const router = useRouter();
 
   const handleNewField = () => {
     router.push("/playing-field-editor");
   };
 
-  const handleSelectField = (field: PlayingField) => {
-    router.push(`/play/${field.id}`);
+  const handleSelectField = (field: Doc<"playingFields">) => {
+    router.push(`/play/${field._id}`);
   };
 
   return (
@@ -35,7 +23,7 @@ export function PlayingFieldSelector() {
         Select a playing field
       </Text>
       <PlayingFieldSelectorList
-        playingFields={playingFields}
+        playingFields={[]}
         onNewField={handleNewField}
         onSelectField={handleSelectField}
       />

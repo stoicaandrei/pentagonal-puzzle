@@ -1,5 +1,5 @@
 import { Polygon } from "react-native-svg";
-import { RenderPoint, GridPosition } from "common";
+import { RenderPoint, GridPosition } from "@/common";
 import Animated, {
   useAnimatedProps,
   withTiming,
@@ -9,7 +9,7 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 import { useEffect, memo } from "react";
-import { hexagonPoints } from "utils";
+import { hexagonPoints } from "@/utils";
 
 // Create an animated polygon component
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);

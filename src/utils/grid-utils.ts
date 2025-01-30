@@ -1,7 +1,8 @@
-import { Cell, PlayingField } from "common";
+import { Cell } from "common";
 import { LayoutChangeEvent } from "react-native";
 import { computeCellWidth, computeCellWidthFromHeight } from "./hex-math";
 import { useState } from "react";
+import { Doc } from "convex/_generated/dataModel";
 
 interface EmptyGridOptions {
   rows: number;
@@ -22,7 +23,7 @@ export const emptyGrid = ({
   );
 };
 
-export const playingFieldToGrid = (playingField: PlayingField) => {
+export const playingFieldToGrid = (playingField: Doc<"playingFields">) => {
   const grid = emptyGrid({
     rows: playingField.rows,
     cols: playingField.cols,

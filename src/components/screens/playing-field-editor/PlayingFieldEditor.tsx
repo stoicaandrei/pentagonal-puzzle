@@ -1,10 +1,10 @@
 import {
   HexagonalGrid,
   OnCellTouchedParams,
-} from "components/common/HexagonalGrid";
+} from "@/components/common/HexagonalGrid";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { emptyGrid } from "utils";
+import { emptyGrid } from "@/utils/grid-utils";
 
 interface PlayingFieldEditorProps {
   rows: number;

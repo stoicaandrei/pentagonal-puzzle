@@ -1,5 +1,4 @@
-import { PiecesEditorPage } from "components/screens/pieces-editor/PiecesEditorPage";
-import { Text } from "react-native";
+import { PiecesEditorPage } from "@/components/screens/pieces-editor/PiecesEditorPage";
 
 export default function FieldPage() {
   return <PiecesEditorPage />;

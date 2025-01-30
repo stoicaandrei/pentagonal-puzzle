@@ -1,10 +1,10 @@
-import { PlayingField } from "common";
-import { HexagonalGrid } from "components/common/HexagonalGrid";
+import { HexagonalGrid } from "@/components/common/HexagonalGrid";
+import { Doc } from "@/convex/_generated/dataModel";
 import { View } from "react-native";
-import { playingFieldToGrid } from "utils";
+import { playingFieldToGrid } from "@/utils";
 
 interface PlayingFieldPreviewProps {
-  playingField: PlayingField;
+  playingField: Doc<"playingFields">;
   previewWidth: number;
 }
 

@@ -1,10 +1,10 @@
-import { PlayingField } from "common";
 import { View, Text, FlatList, Pressable, Dimensions } from "react-native";
 import { PlayingFieldPreview } from "./PlayingFieldPreview";
+import { Doc } from "@/convex/_generated/dataModel";
 
 interface PlayingFieldSelectorListProps {
-  playingFields: PlayingField[];
-  onSelectField?: (field: PlayingField) => void;
+  playingFields: Doc<"playingFields">[];
+  onSelectField?: (field: Doc<"playingFields">) => void;
   onNewField?: () => void;
 }
 
@@ -13,7 +13,7 @@ export function PlayingFieldSelectorList({
   onSelectField,
   onNewField,
 }: PlayingFieldSelectorListProps) {
-  const renderItem = ({ item }: { item: PlayingField }) => (
+  const renderItem = ({ item }: { item: Doc<"playingFields"> }) => (
     <Pressable
       className="bg-white rounded-xl p-4 shadow-md active:opacity-70"
       onPress={() => onSelectField?.(item)}
@@ -47,7 +47,7 @@ export function PlayingFieldSelectorList({
       data={playingFields}
       renderItem={renderItem}
       ListHeaderComponent={ListHeaderComponent}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       contentContainerStyle={{ padding: 16 }}
       ItemSeparatorComponent={() => <View className="h-4" />}
     />

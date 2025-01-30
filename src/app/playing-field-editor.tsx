@@ -1,4 +1,4 @@
-import { PlayingFieldEditorPage } from "components/screens/playing-field-editor/PlayingFieldEditorPage";
+import { PlayingFieldEditorPage } from "@/components/screens/playing-field-editor/PlayingFieldEditorPage";
 import { View, Text } from "react-native";
 
 export default function PlayingFieldEditor() {

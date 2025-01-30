@@ -1,11 +1,15 @@
-import { Cell } from "common";
+import { Cell } from "@/common";
 import { Hexagon } from "./Hexagon";
 import { GestureResponderEvent, Platform, View } from "react-native";
 import Svg from "react-native-svg";
-import { gridHeight, hexCenter, useResponsiveCellWidth } from "utils";
-import { gridWidth } from "utils";
+import {
+  gridHeight,
+  hexCenter,
+  gridWidth,
+  useResponsiveCellWidth,
+} from "@/utils";
 import { useState } from "react";
-import { RenderPoint } from "components/types";
+import { RenderPoint } from "@/components/types";
 
 export type OnCellTouchedParams = {
   cell: Cell;
