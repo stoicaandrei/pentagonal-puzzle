@@ -4,15 +4,21 @@ import {
 } from "@/components/common/HexagonalGrid";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { emptyGrid, playingFieldToGrid } from "@/utils";
+import { gridToPieces, playingFieldToGrid } from "@/utils";
 import { Doc } from "@/convex/_generated/dataModel";
+import { Cell } from "@/common";
 
 interface PiecesEditorProps {
   playingField: Doc<"playingFields">;
   pieceColor?: string;
+  onGridChange?: (grid: Cell[][]) => void;
 }
 
-export function PiecesEditor({ playingField, pieceColor }: PiecesEditorProps) {
+export function PiecesEditor({
+  playingField,
+  pieceColor,
+  onGridChange,
+}: PiecesEditorProps) {
   const [grid, setGrid] = useState(
     playingFieldToGrid(playingField, { fieldColor: "white" })
   );
@@ -23,11 +29,14 @@ export function PiecesEditor({ playingField, pieceColor }: PiecesEditorProps) {
 
   const handleCellTouch = ({ cell }: OnCellTouchedParams) => {
     const { row, col } = cell.position;
-    setGrid((prevGrid) => {
-      const newGrid = prevGrid.map((row) => [...row]); // Create a deep copy
-      newGrid[row][col].color = pieceColor ?? "white";
-      return newGrid;
-    });
+    const newGrid = [...grid];
+    newGrid[row][col].color = pieceColor ?? "white";
+    setGrid(newGrid);
+
+    const pieces = gridToPieces(newGrid, "white");
+    if (pieces) {
+      onGridChange?.(newGrid);
+    }
   };
 
   return (

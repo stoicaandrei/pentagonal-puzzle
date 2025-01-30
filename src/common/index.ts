@@ -21,3 +21,7 @@ export type PlayingField = {
   title: string;
   validPositions: GridPosition[];
 };
+
+export type PieceBlock = {
+  neighbors: (PieceBlock | null)[];
+};
