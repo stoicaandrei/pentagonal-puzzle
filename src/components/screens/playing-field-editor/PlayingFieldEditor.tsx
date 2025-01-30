@@ -1,22 +1,10 @@
-import { Cell } from "common";
 import {
   HexagonalGrid,
   OnCellTouchedParams,
 } from "components/common/HexagonalGrid";
 import { useEffect, useState } from "react";
-import {
-  LayoutChangeEvent,
-  useWindowDimensions,
-  View,
-  Text,
-} from "react-native";
-import {
-  computeCellWidth,
-  computeCellWidthFromHeight,
-  computeCols,
-  computeRows,
-  emptyGrid,
-} from "utils";
+import { View } from "react-native";
+import { emptyGrid } from "utils";
 
 interface PlayingFieldEditorProps {
   rows: number;
@@ -25,6 +13,10 @@ interface PlayingFieldEditorProps {
 
 export function PlayingFieldEditor({ rows, cols }: PlayingFieldEditorProps) {
   const [grid, setGrid] = useState(emptyGrid({ rows: rows, cols: cols }));
+
+  useEffect(() => {
+    setGrid(emptyGrid({ rows: rows, cols: cols }));
+  }, [rows, cols]);
 
   const handleCellTouch = ({ cell }: OnCellTouchedParams) => {
     const { row, col } = cell.position;
