@@ -12,7 +12,7 @@ export function PlayingFieldPreview({
   playingField,
   previewWidth,
 }: PlayingFieldPreviewProps) {
-  const grid = playingFieldToGrid(playingField);
+  const grid = playingFieldToGrid(playingField, { fieldColor: "white" });
 
   return (
     <View style={{ width: previewWidth, minHeight: previewWidth }}>
