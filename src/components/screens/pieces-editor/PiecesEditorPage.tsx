@@ -1,5 +1,6 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { useState } from "react";
+import { PiecesEditor } from "./PiecesEditor";
 
 const PIECE_COLORS = [
   "#FF6B6B", // Red
@@ -43,6 +44,8 @@ function PiecePreview({ color, isSelected, onSelect }: PiecePreviewProps) {
 }
 
 export function PiecesEditorPage() {
+  const rows = 13;
+  const cols = 13;
   const [selectedPieceColor, setSelectedPieceColor] = useState<string | null>(
     null
   );
@@ -81,8 +84,11 @@ export function PiecesEditorPage() {
               padding: 16,
             }}
           >
-            {/* TODO: Add piece editor grid here */}
-            <Text>Piece editor coming soon...</Text>
+            <PiecesEditor
+              rows={rows}
+              cols={cols}
+              pieceColor={selectedPieceColor}
+            />
           </View>
         </View>
       )}
