@@ -7,7 +7,18 @@ import { Doc } from "@/convex/_generated/dataModel";
 
 export function PlayingFieldSelector() {
   const playingFields = useQuery(api.game.listPlayingFields) ?? [];
-  const deletePlayingField = useMutation(api.game.deletePlayingField);
+  const deletePlayingField = useMutation(
+    api.game.deletePlayingField
+  ).withOptimisticUpdate((localStore, args) => {
+    const currentFields = localStore.getQuery(api.game.listPlayingFields);
+    if (currentFields !== undefined) {
+      localStore.setQuery(
+        api.game.listPlayingFields,
+        {},
+        currentFields.filter((field) => field._id !== args._id)
+      );
+    }
+  });
   const router = useRouter();
 
   const handleNewField = () => {
