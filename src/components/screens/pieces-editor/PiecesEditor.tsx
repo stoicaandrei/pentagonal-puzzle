@@ -4,22 +4,22 @@ import {
 } from "@/components/common/HexagonalGrid";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { emptyGrid } from "@/utils";
+import { emptyGrid, playingFieldToGrid } from "@/utils";
+import { Doc } from "@/convex/_generated/dataModel";
 
 interface PiecesEditorProps {
-  rows: number;
-  cols: number;
+  playingField: Doc<"playingFields">;
   pieceColor?: string;
 }
 
-export function PiecesEditor({ rows, cols, pieceColor }: PiecesEditorProps) {
+export function PiecesEditor({ playingField, pieceColor }: PiecesEditorProps) {
   const [grid, setGrid] = useState(
-    emptyGrid({ rows: rows, cols: cols, color: "white" })
+    playingFieldToGrid(playingField, { fieldColor: "white" })
   );
 
   useEffect(() => {
-    setGrid(emptyGrid({ rows: rows, cols: cols }));
-  }, [rows, cols]);
+    setGrid(playingFieldToGrid(playingField, { fieldColor: "white" }));
+  }, [playingField]);
 
   const handleCellTouch = ({ cell }: OnCellTouchedParams) => {
     const { row, col } = cell.position;
@@ -33,8 +33,8 @@ export function PiecesEditor({ rows, cols, pieceColor }: PiecesEditorProps) {
   return (
     <View className="w-full h-full">
       <HexagonalGrid
-        rows={rows}
-        cols={cols}
+        rows={playingField.rows}
+        cols={playingField.cols}
         grid={grid}
         onCellTouched={handleCellTouch}
       />

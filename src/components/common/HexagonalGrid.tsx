@@ -89,7 +89,7 @@ export function HexagonalGrid({
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         // If point is within cellSize of center, it's inside the hexagon
-        if (distance < minDistance) {
+        if (distance < minDistance && !grid[row][col].disabled) {
           minDistance = distance;
           closestCell = grid[row][col];
         }
@@ -134,6 +134,7 @@ export function HexagonalGrid({
                 center={center}
                 width={cellWidth}
                 color={cell.color}
+                disabled={cell.disabled}
               />
             );
           })

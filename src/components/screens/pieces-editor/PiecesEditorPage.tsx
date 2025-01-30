@@ -97,8 +97,7 @@ export function PiecesEditorPage({ playingField }: PiecesEditorPageProps) {
           }}
         >
           <PiecesEditor
-            rows={rows}
-            cols={cols}
+            playingField={playingField}
             pieceColor={selectedPieceColor}
           />
         </View>

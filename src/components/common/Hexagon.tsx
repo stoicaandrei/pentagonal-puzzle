@@ -19,18 +19,22 @@ interface HexagonProps {
   center: RenderPoint;
   width: number;
   color: string;
+  disabled?: boolean;
 }
 
 export const Hexagon = memo(
-  function Hexagon({ position, center, width, color }: HexagonProps) {
+  function Hexagon({ position, center, width, color, disabled }: HexagonProps) {
     const opacity = useSharedValue(0);
     const scale = useSharedValue(1);
 
     useEffect(() => {
       // Add a small delay based on position to create a cascade effect
       const delay = (position.row + position.col) * 10;
-      opacity.value = withDelay(delay, withTiming(1, { duration: 500 }));
-    }, []);
+      opacity.value = withDelay(
+        delay,
+        withTiming(disabled ? 0.5 : 1, { duration: 500 })
+      );
+    }, [disabled]);
 
     useEffect(() => {
       if (color) {
@@ -67,7 +71,8 @@ export const Hexagon = memo(
       prev.center.x === next.center.x &&
       prev.center.y === next.center.y &&
       prev.width === next.width &&
-      prev.color === next.color
+      prev.color === next.color &&
+      prev.disabled === next.disabled
     );
   }
 );

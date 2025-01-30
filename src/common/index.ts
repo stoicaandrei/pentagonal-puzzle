@@ -11,6 +11,7 @@ export type RenderPoint = {
 export type Cell = {
   position: GridPosition;
   color: string;
+  disabled?: boolean;
 };
 
 export type PlayingField = {

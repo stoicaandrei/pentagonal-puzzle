@@ -1,37 +1,52 @@
-import { Cell } from "common";
 import { LayoutChangeEvent } from "react-native";
 import { computeCellWidth, computeCellWidthFromHeight } from "./hex-math";
 import { useState } from "react";
-import { Doc } from "convex/_generated/dataModel";
+import { Doc } from "@/convex/_generated/dataModel";
+import { Cell } from "@/common";
 
 interface EmptyGridOptions {
   rows: number;
   cols: number;
-  color?: string;
+  defaultCell?: {
+    color?: string;
+    disabled?: boolean;
+  };
 }
 
 export const emptyGrid = ({
   rows,
   cols,
-  color = "white",
+  defaultCell,
 }: EmptyGridOptions): Cell[][] => {
   return Array.from({ length: rows }, (_, row) =>
     Array.from({ length: cols }, (_, col) => ({
       position: { row, col },
-      color,
+      color: defaultCell?.color ?? "white",
+      disabled: defaultCell?.disabled,
     }))
   );
 };
 
-export const playingFieldToGrid = (playingField: Doc<"playingFields">) => {
+interface playingFieldToGridOptions {
+  fieldColor: string;
+}
+
+export const playingFieldToGrid = (
+  playingField: Doc<"playingFields">,
+  { fieldColor }: playingFieldToGridOptions
+) => {
   const grid = emptyGrid({
     rows: playingField.rows,
     cols: playingField.cols,
-    color: "white",
+    defaultCell: {
+      disabled: true,
+      color: "lightgray",
+    },
   });
 
   playingField.validPositions.forEach((position) => {
-    grid[position.row][position.col].color = "green";
+    grid[position.row][position.col].color = fieldColor;
+    grid[position.row][position.col].disabled = false;
   });
 
   return grid;
