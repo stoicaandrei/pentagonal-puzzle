@@ -11,21 +11,19 @@ export const listPlayingFields = query({
 });
 
 export const createPlayingField = mutation({
-  args: {
-    playingField: playingFieldSchema,
-  },
-  handler: async ({ db }, { playingField }) => {
-    return await db.insert("playingFields", playingField);
+  args: { data: playingFieldSchema },
+  handler: async ({ db }, { data }) => {
+    return await db.insert("playingFields", data);
   },
 });
 
 export const updatePlayingField = mutation({
   args: {
     _id: v.id("playingFields"),
-    playingField: playingFieldSchema,
+    data: playingFieldSchema,
   },
-  handler: async ({ db }, { _id, playingField }) => {
-    return await db.patch(_id, playingField);
+  handler: async ({ db }, { _id, data }) => {
+    return await db.patch(_id, data);
   },
 });
 

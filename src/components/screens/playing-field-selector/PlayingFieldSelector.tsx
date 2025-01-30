@@ -6,7 +6,7 @@ import { useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
 
 export function PlayingFieldSelector() {
-  const playingFields = useQuery(api.game.listPlayingFields);
+  const playingFields = useQuery(api.game.listPlayingFields) ?? [];
   const router = useRouter();
 
   const handleNewField = () => {
@@ -23,7 +23,7 @@ export function PlayingFieldSelector() {
         Select a playing field
       </Text>
       <PlayingFieldSelectorList
-        playingFields={[]}
+        playingFields={playingFields}
         onNewField={handleNewField}
         onSelectField={handleSelectField}
       />

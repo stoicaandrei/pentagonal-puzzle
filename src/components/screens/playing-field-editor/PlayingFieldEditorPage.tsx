@@ -1,8 +1,14 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import { PlayingFieldEditor } from "./PlayingFieldEditor";
 import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useRouter } from "expo-router";
 
 export function PlayingFieldEditorPage() {
+  const router = useRouter();
+  const createPlayingField = useMutation(api.game.createPlayingField);
+
   const [title, setTitle] = useState("Untitled Field");
   const [gridDimensions, setGridDimensions] = useState({ rows: 10, cols: 10 });
   const [inputValues, setInputValues] = useState({
@@ -29,12 +35,15 @@ export function PlayingFieldEditorPage() {
   };
 
   const handleSave = () => {
-    // TODO: Implement save functionality
-    console.log("Saving field:", {
-      title,
-      rows: gridDimensions.rows,
-      cols: gridDimensions.cols,
+    createPlayingField({
+      data: {
+        title,
+        rows: gridDimensions.rows,
+        cols: gridDimensions.cols,
+        validPositions: [],
+      },
     });
+    router.push("/");
   };
 
   return (
