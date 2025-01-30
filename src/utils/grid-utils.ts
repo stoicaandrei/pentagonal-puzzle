@@ -58,3 +58,9 @@ export const useResponsiveCellWidth = (cols: number, rows: number) => {
 
   return { cellWidth, viewProps };
 };
+
+export const gridToValidPositions = (grid: Cell[][], validColor: string) => {
+  return grid.flatMap((row) =>
+    row.filter((cell) => cell.color === validColor).map((cell) => cell.position)
+  );
+};

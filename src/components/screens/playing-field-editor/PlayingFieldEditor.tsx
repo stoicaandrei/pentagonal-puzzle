@@ -4,14 +4,21 @@ import {
 } from "@/components/common/HexagonalGrid";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { emptyGrid } from "@/utils/grid-utils";
+import { emptyGrid, gridToValidPositions } from "@/utils/grid-utils";
 
 interface PlayingFieldEditorProps {
   rows: number;
   cols: number;
+  validPositions?: { row: number; col: number }[];
+  onValidPositionsChange?: (positions: { row: number; col: number }[]) => void;
 }
 
-export function PlayingFieldEditor({ rows, cols }: PlayingFieldEditorProps) {
+export function PlayingFieldEditor({
+  rows,
+  cols,
+  validPositions,
+  onValidPositionsChange,
+}: PlayingFieldEditorProps) {
   const [grid, setGrid] = useState(emptyGrid({ rows: rows, cols: cols }));
 
   useEffect(() => {
@@ -20,11 +27,13 @@ export function PlayingFieldEditor({ rows, cols }: PlayingFieldEditorProps) {
 
   const handleCellTouch = ({ cell }: OnCellTouchedParams) => {
     const { row, col } = cell.position;
-    setGrid((prevGrid) => {
-      const newGrid = prevGrid.map((row) => [...row]); // Create a deep copy
-      newGrid[row][col].color = "red";
-      return newGrid;
-    });
+    const newGrid = [...grid];
+    newGrid[row][col].color = "green";
+    setGrid(newGrid);
+
+    if (onValidPositionsChange) {
+      onValidPositionsChange(gridToValidPositions(newGrid, "green"));
+    }
   };
 
   return (

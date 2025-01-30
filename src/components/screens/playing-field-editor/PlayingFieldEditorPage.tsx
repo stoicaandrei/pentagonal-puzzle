@@ -15,6 +15,12 @@ export function PlayingFieldEditorPage() {
     rows: gridDimensions.rows.toString(),
     cols: gridDimensions.cols.toString(),
   });
+  const [validPositions, setValidPositions] = useState<
+    {
+      row: number;
+      col: number;
+    }[]
+  >([]);
 
   const handleRowsChange = (text: string) => {
     setInputValues((prev) => ({ ...prev, rows: text }));
@@ -40,7 +46,7 @@ export function PlayingFieldEditorPage() {
         title,
         rows: gridDimensions.rows,
         cols: gridDimensions.cols,
-        validPositions: [],
+        validPositions,
       },
     });
     router.push("/");
@@ -98,6 +104,7 @@ export function PlayingFieldEditorPage() {
       <PlayingFieldEditor
         rows={gridDimensions.rows}
         cols={gridDimensions.cols}
+        onValidPositionsChange={setValidPositions}
       />
     </View>
   );
