@@ -25,6 +25,10 @@ export function PlayingFieldSelector() {
     router.push("/playing-field-editor");
   };
 
+  const handleSelectField = (field: PlayingField) => {
+    router.push(`/play/${field.id}`);
+  };
+
   return (
     <View className="flex-1 items-center justify-center">
       <Text className="text-3xl font-bold mb-4 pt-4">
@@ -33,6 +37,7 @@ export function PlayingFieldSelector() {
       <PlayingFieldSelectorList
         playingFields={playingFields}
         onNewField={handleNewField}
+        onSelectField={handleSelectField}
       />
     </View>
   );
