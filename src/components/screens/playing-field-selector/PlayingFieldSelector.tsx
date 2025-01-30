@@ -2,11 +2,12 @@ import { View, Text } from "react-native";
 import { PlayingFieldSelectorList } from "./PlayingFieldSelectorList";
 import { useRouter } from "expo-router";
 import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
 
 export function PlayingFieldSelector() {
   const playingFields = useQuery(api.game.listPlayingFields) ?? [];
+  const deletePlayingField = useMutation(api.game.deletePlayingField);
   const router = useRouter();
 
   const handleNewField = () => {
@@ -15,6 +16,10 @@ export function PlayingFieldSelector() {
 
   const handleSelectField = (field: Doc<"playingFields">) => {
     router.push(`/play/${field._id}`);
+  };
+
+  const handleDeleteField = async (field: Doc<"playingFields">) => {
+    await deletePlayingField({ _id: field._id });
   };
 
   return (
@@ -26,6 +31,7 @@ export function PlayingFieldSelector() {
         playingFields={playingFields}
         onNewField={handleNewField}
         onSelectField={handleSelectField}
+        onDeleteField={handleDeleteField}
       />
     </View>
   );

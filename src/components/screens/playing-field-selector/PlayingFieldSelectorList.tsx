@@ -6,24 +6,43 @@ interface PlayingFieldSelectorListProps {
   playingFields: Doc<"playingFields">[];
   onSelectField?: (field: Doc<"playingFields">) => void;
   onNewField?: () => void;
+  onDeleteField?: (field: Doc<"playingFields">) => void;
 }
 
 export function PlayingFieldSelectorList({
   playingFields,
   onSelectField,
   onNewField,
+  onDeleteField,
 }: PlayingFieldSelectorListProps) {
   const renderItem = ({ item }: { item: Doc<"playingFields"> }) => (
-    <Pressable
-      className="bg-white rounded-xl p-4 shadow-md active:opacity-70"
-      onPress={() => onSelectField?.(item)}
-    >
-      <View className="w-full flex flex-1 justify-center items-center">
-        <PlayingFieldPreview playingField={item} previewWidth={200} />
-      </View>
+    <View className="mb-4">
+      <Pressable
+        className="bg-white rounded-xl p-4 shadow-md active:opacity-70"
+        onPress={() => onSelectField?.(item)}
+      >
+        <View className="w-full flex flex-1 justify-center items-center">
+          <PlayingFieldPreview playingField={item} previewWidth={200} />
+        </View>
 
-      <Text className="text-lg font-semibold text-gray-800">{item.title}</Text>
-    </Pressable>
+        <View className="flex-row justify-between items-center">
+          <Text className="text-lg font-semibold text-gray-800">
+            {item.title}
+          </Text>
+          {onDeleteField && (
+            <Pressable
+              className="bg-red-500 px-3 py-1 rounded-lg active:opacity-70"
+              onPress={(e) => {
+                e.stopPropagation();
+                onDeleteField(item);
+              }}
+            >
+              <Text className="text-white font-semibold">Delete</Text>
+            </Pressable>
+          )}
+        </View>
+      </Pressable>
+    </View>
   );
 
   const ListHeaderComponent = () => (
